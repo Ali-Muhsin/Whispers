@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/Shaders/Lookup/Lookup.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D lookup_texture : hint_albedo;
+
+void fragment() {
+	vec4 origc = texture(TEXTURE, UV);
+    // Get the red and green channel values of the current pixel
+    float r = origc.r;
+    float g = origc.g;
+	float a = origc.a;
+
+    // Create a valid texture coordinate using the normalized red and green values
+    vec2 lookup_coord = vec2(r, 0);
+
+    // Use the coordinate to sample from the lookup texture
+    vec4 lookup_color = texture(lookup_texture, lookup_coord);
+
+    // Set the color of the current pixel to the color from the lookup texture
+    COLOR = vec4(lookup_color.r, lookup_color.g, lookup_color.b, origc.a);
+}
+"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/lookup_texture = ExtResource( 1 )
