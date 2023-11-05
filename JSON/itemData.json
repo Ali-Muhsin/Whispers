@@ -1,1 +1,1 @@
-{"Sword":{"path":"res://Weapons/Swords/Sword.tscn","isTool":true,"strength":1}}
+{"Sword":{"path":"res://Weapons/Swords/Sword.tscn","isTool":true,"strength":1},"Wood":{"isTool":false}}

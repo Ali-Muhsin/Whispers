@@ -33,6 +33,6 @@ func set_durability_to_zero():
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("attackable"):
-		var itemData = global.getItemByKey(area.get_parent().name)
+		var itemData = global.getItemByKey(area.get_parent().name, global.itemData)
 		var itemStrength: String = itemData["strength"]
 		durability -= strength

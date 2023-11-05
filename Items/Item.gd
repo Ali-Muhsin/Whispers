@@ -8,8 +8,9 @@ export(String)var path
 export(bool)var isTool
 
 func _ready():
-	global.setInfo(itemName, "path", path)
 	global.setInfo(itemName, "isTool", isTool)
+	if isTool:
+		global.setInfo(itemName, "path", path)
 
 func _physics_process(_delta):
 	if !is_on_floor():

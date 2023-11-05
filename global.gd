@@ -2,6 +2,8 @@ extends Node
 class_name dataManage
 
 var items: Dictionary
+var itemData := "res://JSON/itemData.json"
+var inventory := "res://JSON/inventory.json"
 
 func _ready() -> void:
 	items = readFromJSON("res://JSON/itemData.json")
@@ -11,7 +13,7 @@ func setInfo(objName: String, property: String, newProperty) -> void:
 		var item = items[objName]
 		if item.has(property):
 			item[property] = newProperty
-			saveToJSON("res://Save/items.json", items)
+			saveToJSON("res://JSON/itemData.json", items)
 			print(property, " updated for ", objName)
 		else:
 			print(objName, " does not have ", property, " property")
@@ -31,14 +33,15 @@ func readFromJSON(path: String) -> Dictionary:
 		return data
 
 func saveToJSON(path: String, data: Dictionary) -> void:
-	var file = File.new()
+	var file := File.new()
 	file.open(path, File.WRITE)
 	var jsonText = JSON.print(data)  # Use JSON.print to convert dictionary to JSON
 	file.store_string(jsonText)
 	file.close()
 
-func getItemByKey(key: String) -> Dictionary:
-	if items and items.has(key):
+func getItemByKey(key: String, path: String) -> Dictionary:
+	var json = readFromJSON(path)
+	if json and json.has(key):
 		return items[key].duplicate(true)
 	else:
 		var a: Dictionary

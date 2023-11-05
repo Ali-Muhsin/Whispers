@@ -5,7 +5,7 @@ func _ready():
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("weapons"):
-		var itemData = global.getItemByKey(area.get_parent().name)
+		var itemData = global.getItemByKey(area.get_parent().name, global.itemData)
 		var weaponStrength = itemData["strength"]
 		if objectValue > 0:
 			objectValue -= weaponStrength

@@ -31,6 +31,8 @@ onready var sprite = $Body
 onready var anim = $AnimationPlayer
 onready var hold = $Hold
 
+signal collecItem()
+
 func _physics_process(_delta: float) -> void:
 	match state:
 		IDLE:
@@ -151,12 +153,14 @@ func _on_AnimationPlayer_animation_finished(finishedAnim) -> void:
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("items"):
-		var itemData = global.getItemByKey(area.get_parent().name)
-		var itemPath: String = itemData["path"]
+		var itemData = global.getItemByKey(area.get_parent().name, global.itemData)
 		var isTool: bool = itemData["isTool"]
 		if isTool == true:
+			var itemPath: String = itemData["path"]
 			var item_resource = load(itemPath)
 			var item = item_resource.instance()
 			if hold.get_child_count() == 0:
 				hold.call_deferred("add_child", item)
+		else:
+			emit_signal("collecItem")
 
