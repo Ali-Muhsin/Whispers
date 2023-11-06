@@ -1,0 +1,17 @@
+{
+    "slot1":{
+        "itemName": "NIL",
+        "itemCount": 0,
+        "isTool": false
+    },
+    "slot2":{
+        "itemName": "NIL",
+        "itemCount": 0,
+        "isTool": false
+    },    
+    "slot3":{
+        "itemName": "NIL",
+        "itemCount": 0,
+        "isTool": false
+    }
+}

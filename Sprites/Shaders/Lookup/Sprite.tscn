@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/Shaders/Lookup/Lookup Shader.tres" type="Material" id=1]
+
+[sub_resource type="StreamTexture" id=1]
+load_path = "res://.import/test.png-2de12b74c3cea0222454fbe2b590da65.stex"
+
+[node name="Sprite" type="Sprite"]
+material = ExtResource( 1 )
+texture = SubResource( 1 )
