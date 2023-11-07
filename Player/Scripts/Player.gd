@@ -153,10 +153,11 @@ func _on_AnimationPlayer_animation_finished(finishedAnim) -> void:
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("items"):
-		var itemData = global.getItemByKey(area.get_parent().name, global.itemDataPath)
-		var inventory = global.getItemByKey(area.get_parent().name, global.inventoryPath)
-		var isTool: bool = itemData["isTool"]
-		print(inventory)
+		var itemName = area.get_parent().name
+		var itemData = global.getItemByKey(itemName, global.items)
+		var inventory = global.inventory
+		var isTool: bool = itemData["isTool"] 
+		print(itemData)
 		if isTool:
 			var itemPath: String = itemData["path"]
 			var item_resource = load(itemPath)
@@ -165,7 +166,10 @@ func _on_Area2D_area_entered(area):
 				hold.call_deferred("add_child", item)
 		else:
 			# For items with isTool set to false, attempt to add them to the inventory
-			for slot in inventory.keys():
-				if inventory[slot]["itemName"] == "NIL":
-					print(1)
-
+			for key in inventory.keys():
+				var itemCount : int = inventory[key]["itemCount"]
+				var slotCapacity : int = inventory[key]["slotCapacity"]
+				if inventory[key]["itemCount"] < slotCapacity:
+					global.setInv(key, "itemName", itemName)
+					global.setInv(key, "itemCount", itemCount + 1)
+					break

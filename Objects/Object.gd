@@ -35,4 +35,4 @@ func FOUR() -> void:
 	pass
 
 func _on_Area2D_area_entered(area):
-	var itemData = global.getItemByKey(area.get_parent().name, global.itemDataPath)
+	var itemData = global.getItemByKey(area.get_parent().name, global.items)

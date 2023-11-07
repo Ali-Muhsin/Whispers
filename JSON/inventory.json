@@ -1,17 +1,1 @@
-{
-    "slot1":{
-        "itemName": "NIL",
-        "itemCount": 0,
-        "isTool": false
-    },
-    "slot2":{
-        "itemName": "NIL",
-        "itemCount": 0,
-        "isTool": false
-    },    
-    "slot3":{
-        "itemName": "NIL",
-        "itemCount": 0,
-        "isTool": false
-    }
-}
+{"slot1":{"itemName":"Wood","itemCount":8,"isTool":false,"slotCapacity":12},"slot2":{"itemName":"NIL","itemCount":0,"isTool":false,"slotCapacity":12},"slot3":{"itemName":"NIL","itemCount":0,"isTool":false,"slotCapacity":12}}
