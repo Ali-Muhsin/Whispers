@@ -373,7 +373,16 @@ position = Vector2( 258, 120 )
 scale = Vector2( 3, 3 )
 
 [node name="Wood" parent="." instance=ExtResource( 6 )]
-position = Vector2( 86, -189 )
+position = Vector2( 77, 81 )
+
+[node name="Wood2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 56, 90 )
+
+[node name="Wood4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 26, 79 )
+
+[node name="Wood3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 7, 93 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 124, 30 )

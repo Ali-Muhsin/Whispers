@@ -10,7 +10,7 @@ export (int) var maxDurability
 onready var sprite = $Sprite
 
 func _ready():
-	global.setInfo(itemName, "strength", strength)
+	global.setInfo(itemName, "strength", strength, global.items, global.itemDataPath)
 	durability = maxDurability
 
 func _process(_delta):
@@ -33,6 +33,6 @@ func set_durability_to_zero():
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("attackable"):
-		var itemData = global.getItemByKey(area.get_parent().name, global.itemDataPath)
+		var itemData = global.getItemByKey(area.get_parent().name, global.item)
 		var itemStrength: String = itemData["strength"]
 		durability -= strength

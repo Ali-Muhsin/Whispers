@@ -153,9 +153,10 @@ func _on_AnimationPlayer_animation_finished(finishedAnim) -> void:
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("items"):
-		var itemName = area.get_parent().name
-		var itemData = global.getItemByKey(itemName, global.items)
 		var inventory = global.inventory
+		var objectData = global.readFromJSON(global.objectDataPath)
+		var itemName = global.getItemByKey(area.get_parent().name, objectData)
+		var itemData = global.getItemByKey(itemName, global.items)
 		var isTool: bool = itemData["isTool"] 
 		print(itemData)
 		if isTool:
@@ -169,7 +170,10 @@ func _on_Area2D_area_entered(area):
 			for key in inventory.keys():
 				var itemCount : int = inventory[key]["itemCount"]
 				var slotCapacity : int = inventory[key]["slotCapacity"]
-				if inventory[key]["itemCount"] < slotCapacity:
-					global.setInv(key, "itemName", itemName)
-					global.setInv(key, "itemCount", itemCount + 1)
-					break
+				if inventory[key]["itemName"] == "NIL" or itemName:
+					if inventory[key]["itemCount"] < slotCapacity:
+						global.setInv(key, "itemName", itemName)
+						if inventory[key]["itemName"] == itemName:
+							global.setInv(key, "itemCount", itemCount + 1)
+							break
+						break
