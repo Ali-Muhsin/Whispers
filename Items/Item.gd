@@ -9,11 +9,15 @@ export(String)var path
 export(bool)var isTool
 
 func _ready():
-	var data: Dictionary = {}
-	data[self.name] = itemName
-	print(data)
+	var objectData: Dictionary
+	var sprite : String = $Sprite.texture.get_path()
+
+	objectData[self.name] = itemName
+	global.items[itemName]["sprite"] = sprite
+
 	global.setInfo(itemName, "isTool", isTool, global.items, global.itemDataPath)
-	global.appendToJSON(global.objectDataPath, data)
+	global.appendToJSON(global.objectDataPath, objectData)
+
 	if isTool:
 		global.setInfo(itemName, "path", path, global.items, global.itemDataPath)
 

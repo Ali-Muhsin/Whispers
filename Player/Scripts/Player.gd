@@ -31,7 +31,7 @@ onready var sprite = $Body
 onready var anim = $AnimationPlayer
 onready var hold = $Hold
 
-signal collecItem()
+signal collectItem(spritePath)
 
 func _physics_process(_delta: float) -> void:
 	match state:
@@ -157,6 +157,7 @@ func _on_Area2D_area_entered(area):
 		var objectData = global.readFromJSON(global.objectDataPath)
 		var itemName = global.getItemByKey(area.get_parent().name, objectData)
 		var itemData = global.getItemByKey(itemName, global.items)
+		var itemSprite = global.items[itemName]["Sprite"]
 		var isTool: bool = itemData["isTool"] 
 		print(itemData)
 		if isTool:
@@ -166,10 +167,12 @@ func _on_Area2D_area_entered(area):
 			if hold.get_child_count() == 0:
 				hold.call_deferred("add_child", item)
 		else:
+			emit_signal("collectItem", itemSprite)
 			# For items with isTool set to false, attempt to add them to the inventory
 			for key in inventory.keys():
 				var itemCount : int = inventory[key]["itemCount"]
 				var slotCapacity : int = inventory[key]["slotCapacity"]
+				print(inventory[key]["itemName"])
 				if inventory[key]["itemName"] == "NIL" or itemName:
 					if inventory[key]["itemCount"] < slotCapacity:
 						global.setInv(key, "itemName", itemName)

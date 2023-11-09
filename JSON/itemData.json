@@ -1,1 +1,1 @@
-{"Sword":{"itemName":"Sword","path":"res://Weapons/Swords/Sword.tscn","isTool":true,"strength":1},"Wood":{"itemName":"Wood","isTool":false,"items":"Wood"}}
+{"Sword":{"itemName":"Sword","path":"res://Weapons/Swords/Sword.tscn","isTool":true,"strength":1,"Sprite":"res://Sprites/Weapons/Swords/Sword1.png"},"Wood":{"itemName":"Wood","isTool":false,"items":"Wood","Sprite":"res://Items/Wood/wood2.png"}}
