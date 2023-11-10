@@ -14,4 +14,4 @@ maxDurability = 5
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" parent="HitBox" index="0"]
-polygon = PoolVector2Array( 0.484375, 1.95313, 1.52805, -0.872653, 0.5, -3.98438, -0.5, -3.98438, -0.46875, 1.98438 )
+polygon = PoolVector2Array( 0.484375, 1.95313, 1.52805, -0.872653, 0.5, -3.98438, -0.5, -3.98438, -0.46875, 1.9
