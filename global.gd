@@ -2,23 +2,45 @@ extends Node
 class_name dataManage
 
 var items: Dictionary
-var itemData := "res://JSON/itemData.json"
-var inventory := "res://JSON/inventory.json"
+var objects: Dictionary
+var inventory: Dictionary
+
+var itemDataPath := "res://JSON/itemData.json"
+var objectDataPath := "res://JSON/objectData.json"
+var inventoryPath := "res://JSON/inventory.json"
+
+export(bool)var reset
 
 func _ready() -> void:
-	items = readFromJSON("res://JSON/itemData.json")
+	inventory = readFromJSON(inventoryPath)
+	items = readFromJSON(itemDataPath)
 
-func setInfo(objName: String, property: String, newProperty) -> void:
-	if items.has(objName):
-		var item = items[objName]
-		if item.has(property):
-			item[property] = newProperty
-			saveToJSON("res://JSON/itemData.json", items)
-			print(property, " updated for ", objName)
+	if reset:
+		reset(inventory)
+
+func reset(inventory: Dictionary) -> void:
+	for key in inventory.keys():
+		inventory[key]["itemName"] = "NIL"
+		inventory[key]["itemCount"] = 0
+		inventory[key]["sprite"] = "res://Sprites/UI/Inventory/NILItem.png"
+
+	saveToJSON(inventoryPath, inventory)
+	reloadItemData()
+
+func reloadItemData() -> void:
+	inventory = readFromJSON(inventoryPath)
+
+func setInfo(objName: String, property: String, newProperty, jsonFile: Dictionary, jsonPath: String) -> void:
+	if jsonFile.has(objName):
+		var key = jsonFile[objName]
+		if key.has(property):
+			key[property] = newProperty
+			saveToJSON(jsonPath, jsonFile)
+			print(property, " updated")
 		else:
-			print(objName, " does not have ", property, " property")
+			print(key, " does not have ", property, " property")
 	else:
-		print("Item not found: ", objName)
+		printerr("Item not found: ", objName)
 
 func readFromJSON(path: String) -> Dictionary:
 	var file = File.new()
@@ -32,17 +54,31 @@ func readFromJSON(path: String) -> Dictionary:
 		printerr("Invalid path given")
 		return data
 
-func saveToJSON(path: String, data: Dictionary) -> void:
-	var file := File.new()
-	file.open(path, File.WRITE)
-	var jsonText = JSON.print(data)  # Use JSON.print to convert dictionary to JSON
-	file.store_string(jsonText)
-	file.close()
-
-func getItemByKey(key: String, path: String) -> Dictionary:
-	var json = readFromJSON(path)
+func getItemByKey(key: String, json: Dictionary) -> Dictionary:
 	if json and json.has(key):
-		return items[key].duplicate(true)
+		return json[key]
 	else:
 		var a: Dictionary
 		return a
+
+
+func saveToJSON(path: String, SaveData: Dictionary) -> void:
+	var file := File.new()
+	file.open(path, File.WRITE)
+	var jsonText = JSON.print(SaveData)  # Use JSON.print to convert dictionary to JSON
+	file.store_string(jsonText)
+	file.close()
+
+func appendToJSON(path: String, newData: Dictionary) -> void:
+	# Read the existing JSON data
+	var existingData = readFromJSON(path)
+
+	# Merge the existing data with the new data
+	for key in newData.keys():
+		existingData[key] = newData[key]
+
+	# Save the updated JSON data
+	saveToJSON(path, existingData)
+
+func setInv(key: String, property: String, newProperty) -> void:
+	setInfo(key, property, newProperty, global.inventory, global.inventoryPath)

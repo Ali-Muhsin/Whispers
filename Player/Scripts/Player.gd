@@ -1,19 +1,19 @@
 extends KinematicBody2D
 class_name Player
 
-var right = "ui_right"
-var left = "ui_left"
-var up = "ui_up"
+var right := "ui_right"
+var left := "ui_left"
+var up := "ui_up"
 
-var velocity = Vector2.ZERO
+var velocity := Vector2.ZERO
 var direction: Vector2
-var gravity = 10
-var speed = Vector2(10,210)
+var gravity := 10
+var speed := Vector2(10,210)
 
-var fallGravity = 8
-var maxSpeed = 100
-var friction = 10
-var releaseForce = -70
+var fallGravity := 8
+var maxSpeed := 100
+var friction := 10
+var releaseForce := -70
 
 var isEquipped: bool
 
@@ -24,16 +24,21 @@ enum {
 	ATTACK
 }
 
-var state = IDLE
-var flip = false
+var state:= IDLE
+var flip:= false
+export (bool) var attack 
 
-onready var sprite = $Body
-onready var anim = $AnimationPlayer
-onready var hold = $Hold
+onready var sprite := $Body
+onready var anim := $AnimationPlayer
+onready var hold := $Hold
 
-signal collecItem()
+signal collectItem
+signal attack(state)
 
 func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_end"):
+		global.reset(global.inventory)
+		emit_signal("collectItem")
 	match state:
 		IDLE:
 			IDLE()
@@ -112,7 +117,7 @@ func get_velocity(
 		new_velocity.y = speed.y * direction.y
 	if new_velocity.y > 0:
 		new_velocity.y += 5
-	if jump_is_interrupted:
+	if jump_is_interrupted: 
 		new_velocity.y = releaseForce
 	
 	return new_velocity 
@@ -147,20 +152,41 @@ func apply_acceleration(acceleration: float, direction: float, velocity: Vector2
 func apply_friction(friction: int) -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
 
-func _on_AnimationPlayer_animation_finished(finishedAnim) -> void:
-	if "Attack" in finishedAnim:
-		state = IDLE
-
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("items"):
-		var itemData = global.getItemByKey(area.get_parent().name, global.itemData)
-		var isTool: bool = itemData["isTool"]
-		if isTool == true:
+		var inventory = global.inventory
+		var objectData = global.readFromJSON(global.objectDataPath)
+		var itemName = global.getItemByKey(area.get_parent().name, objectData)
+		var itemData = global.getItemByKey(itemName, global.items)
+		var itemSprite = global.items[itemName]["sprite"]
+		var isTool: bool = itemData["isTool"] 
+		if isTool:
 			var itemPath: String = itemData["path"]
 			var item_resource = load(itemPath)
 			var item = item_resource.instance()
 			if hold.get_child_count() == 0:
 				hold.call_deferred("add_child", item)
 		else:
-			emit_signal("collecItem")
+			# For items with isTool set to false, attempt to add them to the inventory
+			for key in inventory.keys():
+				var itemCount : int = inventory[key]["itemCount"]
+				var slotCapacity : int = inventory[key]["slotCapacity"]
+				if inventory[key]["itemName"] == "NIL" or inventory[key]["itemName"] == itemName and itemName != "NIL":
+					if inventory[key]["itemCount"] < slotCapacity:
+						global.setInv(key, "sprite", itemSprite)
+						global.setInv(key, "itemName", itemName)
+						if inventory[key]["itemName"] == itemName:
+							global.setInv(key, "itemCount", itemCount + 1)
+							emit_signal("collectItem")
+							break
+						emit_signal("collectItem")
+						break
 
+func _on_AnimationPlayer_animation_started(anim_name):
+	if "Attack" in anim_name:
+		emit_signal("attack", true)
+
+func _on_AnimationPlayer_animation_finished(finishedAnim) -> void:
+	if "Attack" in finishedAnim:
+		state = IDLE
+		emit_signal("attack", false)
