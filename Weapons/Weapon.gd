@@ -8,10 +8,14 @@ export (int) var maxStrength
 export (int) var maxDurability
 
 onready var sprite = $Sprite
+onready var hitBox = $HitBox
+
+onready var player = load("res://Player/Player.tscn")
 
 func _ready():
-	global.setInfo(itemName, "strength", strength, global.items, global.itemDataPath)
 	durability = maxDurability
+
+	player.connect("attack", self, "attack")
 
 func _process(_delta):
 	if durability > maxDurability/2:
@@ -36,3 +40,9 @@ func _on_Area2D_area_entered(area):
 		var itemData = global.getItemByKey(area.get_parent().name, global.item)
 		var itemStrength: String = itemData["strength"]
 		durability -= strength
+
+func attack(state: bool) -> void:
+	if state:
+		hitBox.monitorable = true
+	else:
+		hitBox.monitorable = false

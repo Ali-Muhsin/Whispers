@@ -7,24 +7,29 @@ var selfName := self.name
 export(String)var itemName 
 export(String)var path
 export(bool)var isTool
+export(float)var strength
 
 func _ready():
 	var objectData: Dictionary
+	var itemData: Dictionary
 	var sprite : String = $Sprite.texture.get_path()
 
 	objectData[self.name] = itemName
-	global.items[itemName]["sprite"] = sprite
+	itemData[itemName] = {
+		"itemName":itemName,
+		"path": path,
+		"strength": strength,
+		"isTool": isTool,
+		"sprite": sprite
+		} 
 
-	global.setInfo(itemName, "isTool", isTool, global.items, global.itemDataPath)
+	global.appendToJSON(global.itemDataPath, itemData)
 	global.appendToJSON(global.objectDataPath, objectData)
-
-	if isTool:
-		global.setInfo(itemName, "path", path, global.items, global.itemDataPath)
 
 func _physics_process(_delta):
 	if !is_on_floor():
 		velocity.y += 8
-	
+
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func _on_Area2D_area_entered(_area):
