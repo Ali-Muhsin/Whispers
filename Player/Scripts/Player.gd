@@ -184,9 +184,11 @@ func _on_Area2D_area_entered(area):
 
 func _on_AnimationPlayer_animation_started(anim_name):
 	if "Attack" in anim_name:
-		emit_signal("attack", true)
+		var attackState := true
+		emit_signal("attack", attackState)
 
 func _on_AnimationPlayer_animation_finished(finishedAnim) -> void:
 	if "Attack" in finishedAnim:
+		var attackState := false
 		state = IDLE
-		emit_signal("attack", false)
+		emit_signal("attack", attackState)

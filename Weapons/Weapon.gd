@@ -8,14 +8,16 @@ export (int) var maxStrength
 export (int) var maxDurability
 
 onready var sprite = $Sprite
-onready var hitBox = $HitBox
+onready var hitBox = $HitBox/CollisionPolygon2D
 
-onready var player = load("res://Player/Player.tscn")
+#var player := self.get_parent().get_parent()
 
 func _ready():
 	durability = maxDurability
 
-	player.connect("attack", self, "attack")
+	print(get_parent().get_parent().name)
+
+	get_parent().get_parent().connect("attack", self, "attack")
 
 func _process(_delta):
 	if durability > maxDurability/2:
@@ -42,7 +44,7 @@ func _on_Area2D_area_entered(area):
 		durability -= strength
 
 func attack(state: bool) -> void:
-	if state:
-		hitBox.monitorable = true
+	if state == true:
+		hitBox.disabled = false
 	else:
-		hitBox.monitorable = false
+		hitBox.disabled = true

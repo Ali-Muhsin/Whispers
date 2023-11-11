@@ -384,7 +384,6 @@ position = Vector2( 44, 90 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 124, 30 )
-attack = true
 
 [node name="Control" parent="." instance=ExtResource( 5 )]
 anchor_left = 0.5

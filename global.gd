@@ -61,7 +61,6 @@ func getItemByKey(key: String, json: Dictionary) -> Dictionary:
 		var a: Dictionary
 		return a
 
-
 func saveToJSON(path: String, SaveData: Dictionary) -> void:
 	var file := File.new()
 	file.open(path, File.WRITE)

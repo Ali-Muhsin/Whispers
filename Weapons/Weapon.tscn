@@ -11,3 +11,4 @@ hframes = 3
 [node name="HitBox" type="Area2D" parent="." groups=["weapons"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+disabled = true
