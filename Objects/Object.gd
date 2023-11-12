@@ -5,6 +5,12 @@ export(int)var objectValue
 export(int)var minValue
 export(int)var maxValue
 
+export(bool)var doesDrop
+export(PackedScene)var drop
+
+onready var anim := $AnimationPlayer
+onready var hitBox := $Area2D
+
 enum state{
 One,
 Two,
@@ -12,7 +18,13 @@ Three,
 Four
 }
 
-var currentState = state.One
+var currentState
+
+func _ready():
+	currentState = state.One
+
+func customInit(value: int) -> void:
+	objectValue = value
 
 func _process(delta):
 	match currentState:
@@ -27,12 +39,20 @@ func _process(delta):
 
 func ONE() -> void:
 	pass
+
 func TWO() -> void:
 	pass
+
 func THREE() -> void:
 	pass
+
 func FOUR() -> void:
 	pass
 
-func _on_Area2D_area_entered(area):
+func drop(dropPosition: Vector2) -> void:
+	var dropInstance = drop.instance()
+	dropInstance.position = position
+	get_parent().add_child(dropInstance)
+
+func _on_Area2D_area_entered(area) -> void:
 	var itemData = global.getItemByKey(area.get_parent().name, global.items)

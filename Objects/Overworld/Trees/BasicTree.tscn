@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Objects/Object.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/World/Overworld/Tree/Basic Tree.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Overworld/Trees/BasicTree.gd" type="Script" id=3]
+[ext_resource path="res://Items/Wood/Wood.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Overworld/Trees/Top.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 40 )
@@ -10,20 +12,89 @@ extents = Vector2( 5, 40 )
 [sub_resource type="Animation" id=2]
 resource_name = "fall"
 length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -90.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [node name="Tree" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-minValue = 1
 maxValue = 4
+doesDrop = true
+drop = ExtResource( 4 )
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2( 0, -40 )
 shape = SubResource( 1 )
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite2" type="Sprite" parent="." index="1"]
+position = Vector2( 0, -3 )
 texture = ExtResource( 2 )
-offset = Vector2( 0, -40 )
 hframes = 6
+region_enabled = true
+region_rect = Rect2( 0, 74, 60, 6 )
 
-[node name="AnimationPlayer" parent="." index="2"]
+[node name="Sprite" parent="." index="2"]
+position = Vector2( 0, -6 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, -37 )
+hframes = 6
+region_enabled = true
+region_rect = Rect2( 0, 0, 60, 74 )
+script = ExtResource( 5 )
+
+[node name="AnimationPlayer" parent="." index="3"]
+autoplay = "idle"
 anims/fall = SubResource( 2 )
+anims/idle = SubResource( 3 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="Sprite" method="_on_AnimationPlayer_animation_finished"]

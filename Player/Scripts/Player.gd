@@ -145,7 +145,7 @@ func animation() -> void:
 		else:
 			anim.play("Air")
 
-func apply_acceleration(acceleration: float, direction: float, velocity: Vector2) -> float:
+func apply_acceleration(acceleration: int, direction: int, velocity: Vector2) -> int:
 	var xVelocity = move_toward(velocity.x, maxSpeed * direction, acceleration)
 	return xVelocity
 

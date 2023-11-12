@@ -7,7 +7,7 @@ var selfName := self.name
 export(String)var itemName 
 export(String)var path
 export(bool)var isTool
-export(float)var strength
+export(int)var strength
 
 func _ready():
 	var objectData: Dictionary

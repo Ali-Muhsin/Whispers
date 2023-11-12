@@ -10,6 +10,7 @@ script = ExtResource( 3 )
 itemName = "Sword"
 path = "res://Weapons/Swords/Sword.tscn"
 isTool = true
+strength = 2.0
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )

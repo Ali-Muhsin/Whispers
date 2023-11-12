@@ -2,7 +2,7 @@ extends Node2D
 class_name Weapon
 
 export(String)var itemName 
-export (int) var strength
+#export (int) var strength
 export (int) var durability
 export (int) var maxStrength
 export (int) var maxDurability
@@ -41,7 +41,7 @@ func _on_Area2D_area_entered(area):
 	if area.is_in_group("attackable"):
 		var itemData = global.getItemByKey(area.get_parent().name, global.item)
 		var itemStrength: String = itemData["strength"]
-		durability -= strength
+		durability -= itemStrength
 
 func attack(state: bool) -> void:
 	if state == true:
