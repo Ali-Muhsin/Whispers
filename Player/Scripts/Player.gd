@@ -37,8 +37,9 @@ signal attack(state)
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_end"):
-		global.reset(global.inventory)
+		global.reset()
 		emit_signal("collectItem")
+
 	match state:
 		IDLE:
 			IDLE()
@@ -88,13 +89,22 @@ func MOVE() -> void:
 		apply_friction(friction)
 
 func ATTACK() -> void:
+	if Input.is_action_just_pressed(right):
+		emit_signal("attack", false)
+		state = MOVE
+	if Input.is_action_just_pressed(left):
+		emit_signal("attack", false)
+		state = MOVE
 	velocity.x = 0
 
 func get_direction() -> Vector2:
-	return Vector2(
-		Input.get_action_strength(right) - Input.get_action_strength(left),
-		-1.0 if Input.is_action_just_pressed(up) and is_on_floor() else 0.0
-	)
+	if state != ATTACK:
+		return Vector2(
+			Input.get_action_strength(right) - Input.get_action_strength(left),
+			-1.0 if Input.is_action_just_pressed(up) and is_on_floor() else 0.0
+		)
+	else:
+		 return Vector2.ZERO
 
 func get_flip():
 	if Input.is_action_just_pressed(right):
@@ -154,12 +164,11 @@ func apply_friction(friction: int) -> void:
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("items"):
-		var inventory = global.inventory
+		var inventory = global.readFromJSON(global.inventoryPath)
 		var objectData = global.readFromJSON(global.objectDataPath)
 		var itemName = global.getItemByKey(area.get_parent().name, objectData)
 		var itemData = global.getItemByKey(itemName, global.items)
-		var itemSprite = global.items[itemName]["sprite"]
-		var isTool: bool = itemData["isTool"] 
+		var isTool: bool = itemData["isTool"]
 		if isTool:
 			var itemPath: String = itemData["path"]
 			var item_resource = load(itemPath)
@@ -167,18 +176,22 @@ func _on_Area2D_area_entered(area):
 			if hold.get_child_count() == 0:
 				hold.call_deferred("add_child", item)
 		else:
+			var itemSprite = global.items[itemName]["sprite"]
 			# For items with isTool set to false, attempt to add them to the inventory
 			for key in inventory.keys():
 				var itemCount : int = inventory[key]["itemCount"]
 				var slotCapacity : int = inventory[key]["slotCapacity"]
-				if inventory[key]["itemName"] == "NIL" or inventory[key]["itemName"] == itemName and itemName != "NIL":
-					if inventory[key]["itemCount"] < slotCapacity:
-						global.setInv(key, "sprite", itemSprite)
-						global.setInv(key, "itemName", itemName)
-						if inventory[key]["itemName"] == itemName:
-							global.setInv(key, "itemCount", itemCount + 1)
-							emit_signal("collectItem")
-							break
+				if inventory[key]["itemName"] == "NIL":
+					# Empty slot, add the item
+					global.setInv(key, "sprite", itemSprite, inventory)
+					global.setInv(key, "itemName", itemName, inventory)
+					global.setInv(key, "itemCount", itemCount + 1, inventory)
+					emit_signal("collectItem")
+					break
+				elif inventory[key]["itemName"] == itemName:
+					# Item already in the inventory, increase count if not at capacity
+					if itemCount < slotCapacity:
+						global.setInv(key, "itemCount", itemCount + 1, inventory)
 						emit_signal("collectItem")
 						break
 

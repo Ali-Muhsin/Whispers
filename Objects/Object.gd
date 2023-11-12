@@ -2,8 +2,9 @@ extends Node2D
 class_name GameObject
 
 export(int)var objectValue
-export(int)var minValue
+#export(int)var minValue
 export(int)var maxValue
+export(int)var dropNum
 
 export(bool)var doesDrop
 export(PackedScene)var drop
@@ -22,9 +23,6 @@ var currentState
 
 func _ready():
 	currentState = state.One
-
-func customInit(value: int) -> void:
-	objectValue = value
 
 func _process(delta):
 	match currentState:
@@ -49,10 +47,12 @@ func THREE() -> void:
 func FOUR() -> void:
 	pass
 
-func drop(dropPosition: Vector2) -> void:
-	var dropInstance = drop.instance()
-	dropInstance.position = position
-	get_parent().add_child(dropInstance)
+func drop(dropPosition: Vector2, dropNum: int) -> void:
+	for i in range(dropNum):
+		var dropInstance = drop.instance()
+		dropInstance.position = Vector2(dropPosition.x + i * 10, dropPosition.y)
+		get_parent().add_child(dropInstance)
+		print(i)
 
 func _on_Area2D_area_entered(area) -> void:
 	var itemData = global.getItemByKey(area.get_parent().name, global.items)

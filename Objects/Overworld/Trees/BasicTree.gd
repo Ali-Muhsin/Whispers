@@ -1,10 +1,7 @@
 extends GameObject
 
-func _ready():
-	customInit(maxValue)
-
 func _process(delta):
-	print(objectValue)
+	pass
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("weapons"):
@@ -21,4 +18,4 @@ func _on_Area2D_area_entered(area):
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "fall":
-		drop(Vector2(position.x - 40, position.y))
+		drop(position, dropNum)

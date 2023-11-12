@@ -1,11 +1,10 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Weapons/Swords/Sword.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/World/Overworld/Grass/GrassTiles.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Overworld/Trees/BasicTree.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/In Game/inGame.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Items/Wood/Wood.tscn" type="PackedScene" id=6]
 [ext_resource path="res://global.gd" type="Script" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
@@ -373,16 +372,8 @@ tile_data = PoolIntArray( 393214, 0, 0, 393215, 0, 1, 327680, 0, 3, 327681, 0, 4
 position = Vector2( 187, 35 )
 
 [node name="Tree" parent="." instance=ExtResource( 4 )]
-position = Vector2( 258, 120 )
+position = Vector2( 54, 120 )
 scale = Vector2( 3, 3 )
-minValue = 0
-maxValue = 0
-
-[node name="Wood1" parent="." instance=ExtResource( 6 )]
-position = Vector2( 77, 81 )
-
-[node name="Wood3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 44, 90 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 124, 30 )
