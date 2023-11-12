@@ -9,25 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "HBoxContainer",
-"class": "ContributorClass",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/ContributorClass.gd"
-}, {
 "base": "Node2D",
 "class": "GameObject",
 "language": "GDScript",
 "path": "res://Objects/Object.gd"
-}, {
-"base": "PanelContainer",
-"class": "GistItem",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/GistItem.gd"
-}, {
-"base": "HBoxContainer",
-"class": "InvitationItem",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/InvitationItem.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Item",
@@ -38,11 +23,6 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/Scripts/Player.gd"
-}, {
-"base": "PanelContainer",
-"class": "RepositoryItem",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/RepositoryItem.gd"
 }, {
 "base": "Node2D",
 "class": "Weapon",
@@ -55,13 +35,9 @@ _global_script_classes=[ {
 "path": "res://global.gd"
 } ]
 _global_script_class_icons={
-"ContributorClass": "",
 "GameObject": "",
-"GistItem": "",
-"InvitationItem": "",
 "Item": "",
 "Player": "",
-"RepositoryItem": "",
 "Weapon": "",
 "dataManage": ""
 }

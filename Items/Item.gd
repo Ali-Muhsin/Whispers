@@ -2,12 +2,11 @@ extends KinematicBody2D
 class_name Item
 
 var velocity := Vector2.ZERO
-var selfName := self.name
 
 export(String)var itemName 
 export(String)var path
 export(bool)var isTool
-export(float)var strength
+export(int)var strength
 
 func _ready():
 	var objectData: Dictionary
@@ -23,8 +22,8 @@ func _ready():
 		"sprite": sprite
 		} 
 
-	global.appendToJSON(global.itemDataPath, itemData)
 	global.appendToJSON(global.objectDataPath, objectData)
+	global.appendToJSON(global.itemDataPath, itemData)
 
 func _physics_process(_delta):
 	if !is_on_floor():

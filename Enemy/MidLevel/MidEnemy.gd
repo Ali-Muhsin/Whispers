@@ -1,5 +1,5 @@
 extends KinematicBody2D
 
-export(float) var strength
-export(float) var maxHealth
-export(float) var health
+export(int) var strength
+export(int) var maxHealth
+export(int) var health

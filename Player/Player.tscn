@@ -925,7 +925,7 @@ offset = Vector2( 0.5, 0 )
 flip_h = true
 hframes = 22
 vframes = 2
-frame = 43
+frame = 37
 
 [node name="Body" type="Sprite" parent="."]
 material = ExtResource( 3 )
@@ -935,7 +935,7 @@ offset = Vector2( 0.5, 0 )
 flip_h = true
 hframes = 22
 vframes = 2
-frame = 21
+frame = 15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Air = SubResource( 6 )
@@ -949,7 +949,7 @@ anims/Run = SubResource( 3 )
 anims/RunFlip = SubResource( 12 )
 
 [node name="Hold" type="Position2D" parent="."]
-position = Vector2( -2.45164, 2.06719 )
+position = Vector2( -0.451639, -3.93281 )
 rotation = -3.31613
 scale = Vector2( -1, 1 )
 z_index = -1

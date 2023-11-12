@@ -1,1 +1,1 @@
-{"Sword":{"itemName":"Sword","path":"res://Weapons/Swords/Sword.tscn","strength":0,"isTool":true,"sprite":"res://Sprites/Weapons/Swords/Sword1.png"},"Wood":{"itemName":"Wood","path":"","strength":0,"isTool":false,"sprite":"res://Items/Wood/wood2.png"}}
+{"Sword":{"itemName":"Sword","path":"res://Weapons/Swords/Sword.tscn","strength":2,"isTool":true,"sprite":"res://Sprites/Weapons/Swords/Sword1.png"},"Wood":{"itemName":"Wood","path":"","strength":0,"isTool":false,"sprite":"res://Items/Wood/wood2.png"}}

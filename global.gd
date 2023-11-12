@@ -16,31 +16,39 @@ func _ready() -> void:
 	items = readFromJSON(itemDataPath)
 
 	if reset:
-		reset(inventory)
+		for key in inventory.keys():
+			inventory[key]["itemName"] = "NIL"
+			inventory[key]["itemCount"] = 0
+			inventory[key]["sprite"] = "res://Sprites/UI/Inventory/NILItem.png"
 
-func reset(inventory: Dictionary) -> void:
-	for key in inventory.keys():
-		inventory[key]["itemName"] = "NIL"
-		inventory[key]["itemCount"] = 0
-		inventory[key]["sprite"] = "res://Sprites/UI/Inventory/NILItem.png"
+		saveToJSON(inventoryPath, inventory)
+#		saveToJSON(objectDataPath, {})
+		reloadData()
 
-	saveToJSON(inventoryPath, inventory)
-	reloadItemData()
+func reset() -> void:
+	var inv = readFromJSON(inventoryPath)
+	for key in inv.keys():
+		inv[key]["itemName"] = "NIL"
+		inv[key]["itemCount"] = 0
+		inv[key]["sprite"] = "res://Sprites/UI/Inventory/NILItem.png"
 
-func reloadItemData() -> void:
+	saveToJSON(inventoryPath, inv)
+	saveToJSON(objectDataPath, {})
+	reloadData()
+
+func reloadData() -> void:
+	items = readFromJSON(itemDataPath)
+	objects = readFromJSON(objectDataPath)
 	inventory = readFromJSON(inventoryPath)
 
 func setInfo(objName: String, property: String, newProperty, jsonFile: Dictionary, jsonPath: String) -> void:
 	if jsonFile.has(objName):
-		var key = jsonFile[objName]
-		if key.has(property):
-			key[property] = newProperty
-			saveToJSON(jsonPath, jsonFile)
-			print(property, " updated")
-		else:
-			print(key, " does not have ", property, " property")
+		jsonFile[objName][property] = newProperty
+		saveToJSON(jsonPath, jsonFile)
+		print(property, " updated")
 	else:
 		printerr("Item not found: ", objName)
+
 
 func readFromJSON(path: String) -> Dictionary:
 	var file = File.new()
@@ -54,13 +62,12 @@ func readFromJSON(path: String) -> Dictionary:
 		printerr("Invalid path given")
 		return data
 
-func getItemByKey(key: String, json: Dictionary) -> Dictionary:
+func getItemByKey(key, json: Dictionary) -> Dictionary:
 	if json and json.has(key):
 		return json[key]
 	else:
 		var a: Dictionary
 		return a
-
 
 func saveToJSON(path: String, SaveData: Dictionary) -> void:
 	var file := File.new()
@@ -80,5 +87,7 @@ func appendToJSON(path: String, newData: Dictionary) -> void:
 	# Save the updated JSON data
 	saveToJSON(path, existingData)
 
-func setInv(key: String, property: String, newProperty) -> void:
-	setInfo(key, property, newProperty, global.inventory, global.inventoryPath)
+func setInv(key: String, property: String, newProperty, inv: Dictionary) -> void:
+	if inv.has(key):
+		inv[key][property] = newProperty
+		saveToJSON(inventoryPath, inv)
