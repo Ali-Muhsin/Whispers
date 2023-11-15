@@ -4,7 +4,6 @@ class_name Player
 var right := "ui_right"
 var left := "ui_left"
 var up := "ui_up"
-
 var velocity := Vector2.ZERO
 var direction: Vector2
 var gravity := 10
@@ -52,7 +51,7 @@ func _physics_process(_delta: float) -> void:
 
 	if direction == Vector2.ZERO and state != ATTACK and is_on_floor():
 		state = IDLE
-	if !velocity.y == 0:
+	if !is_on_floor():
 		state = AIR
 	if !direction.x == 0 and state != ATTACK and is_on_floor():
 		state = MOVE 

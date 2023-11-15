@@ -91,3 +91,7 @@ func setInv(key: String, property: String, newProperty, inv: Dictionary) -> void
 	if inv.has(key):
 		inv[key][property] = newProperty
 		saveToJSON(inventoryPath, inv)
+
+func _notification(what):
+	if what == NOTIFICATION_WM_QUIT_REQUEST:
+		print("Game stopped or scene changed")

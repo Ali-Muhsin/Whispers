@@ -10,10 +10,11 @@ radius = 4.60977
 
 [node name="Item" type="KinematicBody2D" groups=["items"]]
 scale = Vector2( 2, 2 )
+z_index = 1
+collision_layer = 4
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-hframes = 3
 
 [node name="Area2D" type="Area2D" parent="." groups=["items"]]
 

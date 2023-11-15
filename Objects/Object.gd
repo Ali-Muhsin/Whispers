@@ -50,9 +50,8 @@ func FOUR() -> void:
 func drop(dropPosition: Vector2, dropNum: int) -> void:
 	for i in range(dropNum):
 		var dropInstance = drop.instance()
-		dropInstance.position = Vector2(dropPosition.x + i * 10, dropPosition.y)
+		dropInstance.position = Vector2(dropPosition.x + i * 25, dropPosition.y)
 		get_parent().add_child(dropInstance)
-		print(i)
 
 func _on_Area2D_area_entered(area) -> void:
 	var itemData = global.getItemByKey(area.get_parent().name, global.items)

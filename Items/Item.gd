@@ -9,6 +9,11 @@ export(bool)var isTool
 export(int)var strength
 
 func _ready():
+	if isTool:
+		$Sprite.hframes = 3
+	else:
+		$Sprite.hframes = 1
+
 	var objectData: Dictionary
 	var itemData: Dictionary
 	var sprite : String = $Sprite.texture.get_path()

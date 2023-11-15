@@ -904,7 +904,7 @@ tracks/8/keys = {
 radius = 3.25867
 height = 8.06384
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["player"]]
 position = Vector2( 9.41286, -12.1456 )
 scale = Vector2( 3, 3 )
 script = ExtResource( 1 )
@@ -956,6 +956,7 @@ z_index = -1
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 7 )

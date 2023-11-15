@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Items/Wood/wood2.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/World/Overworld/Tree/wood2.png" type="Texture" id=1]
 [ext_resource path="res://Items/Item.tscn" type="PackedScene" id=2]
 
 [node name="Wood" instance=ExtResource( 2 )]
@@ -8,4 +8,3 @@ itemName = "Wood"
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )
-hframes = 1

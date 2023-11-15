@@ -1,10 +1,11 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Weapons/Swords/Sword.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/World/Overworld/Grass/GrassTiles.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Overworld/Trees/BasicTree.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/In Game/inGame.tscn" type="PackedScene" id=5]
+[ext_resource path="res://NPCs/Enemy/Enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://global.gd" type="Script" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
@@ -365,22 +366,29 @@ reset = true
 scale = Vector2( 3, 3 )
 tile_set = SubResource( 1 )
 cell_size = Vector2( 8, 8 )
+collision_layer = 3
 format = 1
 tile_data = PoolIntArray( 393214, 0, 0, 393215, 0, 1, 327680, 0, 3, 327681, 0, 4, 327682, 0, 3, 327683, 0, 1, 327684, 0, 3, 327685, 0, 4, 327686, 0, 1, 327687, 0, 2, 327688, 0, 3, 327689, 0, 3, 327690, 0, 4, 327691, 0, 2, 327692, 0, 1, 327693, 0, 5, 458750, 0, 196608, 458751, 0, 196609, 393216, 0, 131076, 393217, 0, 131076, 393218, 0, 65537, 393219, 0, 196610, 393220, 0, 131075, 393221, 0, 196612, 393222, 0, 196610, 393223, 0, 131073, 393224, 0, 196610, 393225, 0, 196611, 393226, 0, 65540, 393227, 0, 196611, 393228, 0, 65540, 393229, 0, 65541, 524286, 0, 131072, 524287, 0, 196611, 458752, 0, 262146, 458753, 0, 262148, 458754, 0, 262148, 458755, 0, 131076, 458756, 0, 65539, 458757, 0, 131074, 458758, 0, 262148, 458759, 0, 131076, 458760, 0, 262148, 458761, 0, 262148, 458762, 0, 262147, 458763, 0, 65539, 458764, 0, 131076, 458765, 0, 65541, 589822, 0, 327680, 589823, 0, 327682, 524288, 0, 327684, 524289, 0, 327684, 524290, 0, 327684, 524291, 0, 327681, 524292, 0, 327683, 524293, 0, 327684, 524294, 0, 327682, 524295, 0, 327683, 524296, 0, 327681, 524297, 0, 327684, 524298, 0, 327683, 524299, 0, 327683, 524300, 0, 327684, 524301, 0, 327685 )
 
 [node name="Sword" parent="." instance=ExtResource( 2 )]
-position = Vector2( 187, 35 )
+position = Vector2( 24, 37 )
+z_index = 0
+collision_layer = 1
 
 [node name="Tree" parent="." instance=ExtResource( 4 )]
 position = Vector2( 54, 120 )
 scale = Vector2( 3, 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 124, 30 )
+position = Vector2( 22, -51 )
 
 [node name="Control" parent="." instance=ExtResource( 5 )]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
+
+[node name="Enemy" parent="." instance=ExtResource( 6 )]
+position = Vector2( 281, 90 )
+scale = Vector2( 3, 3 )
 
 [connection signal="collectItem" from="Player" to="Control" method="_on_Player_collectItem"]
