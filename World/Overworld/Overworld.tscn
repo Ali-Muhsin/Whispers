@@ -380,15 +380,16 @@ position = Vector2( 54, 120 )
 scale = Vector2( 3, 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 22, -51 )
+position = Vector2( 290, 61 )
+
+[node name="Enemy" parent="." instance=ExtResource( 6 )]
+position = Vector2( 164, 95 )
+scale = Vector2( 3, 3 )
+gravity = 0
 
 [node name="Control" parent="." instance=ExtResource( 5 )]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-
-[node name="Enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( 281, 90 )
-scale = Vector2( 3, 3 )
 
 [connection signal="collectItem" from="Player" to="Control" method="_on_Player_collectItem"]

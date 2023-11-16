@@ -1,28 +1,39 @@
 extends KinematicBody2D
 
-export (int) var speed
+var speed := 10
+onready var player = get_node("/root/Overworld/Player")
+export (int) var gravity
 
-var dir : Vector2
-var seen : bool
+enum{
+	SEEK,
+	CHASE
+}
+
+var dir : Vector2 = Vector2.ZERO
+var state := SEEK
 
 func _physics_process(delta):
-	move()
+	if state == CHASE:
+		update_dir()
+		move()
+	else:
+		pass
 
 func move() -> void:
-	print(dir)
 	var direction : Vector2
-	if seen:
-		direction = dir - position
-	else:
-		direction = dir
-
-	direction = direction.normalized()
+	direction = (dir - position).normalized()
 
 	move_and_slide(direction * speed, Vector2.UP)
 
+
+func update_dir() -> void:
+	if player:
+		dir = player.position
+
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("player"):
-		seen = true  # Check if the entered area is the player
-		dir = area.position
-	else:
-		 dir = position
+		state = CHASE
+
+func _on_Area2D_area_exited(area):
+	if area.is_in_group("player"):
+		state = SEEK
